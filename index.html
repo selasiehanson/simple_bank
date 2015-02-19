@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <link rel="stylesheet" href="css/app.css" />
+  <link rel="stylesheet" href="css/bootstrap.css">
+</head>
+<body>
+  <div id="main" class="container"></div>
+  <script src="bower_components/react/react.js"></script>
+  <script src="bower_components/react-router/dist/react-router.js"></script>
+  <script src="bower_components/react/JSXTransformer.js"></script>
+  <script type="text/jsx">
+    /** @jsx React.DOM */
+
+    var Link = ReactRouter.Link;
+    var Route = ReactRouter.Route;
+    var Routes = ReactRouter.Routes;
+    var RouteHandler = ReactRouter.RouteHandler;
+
+    window.rx = ReactRouter
+
+
+    var AppMenu = React.createClass({
+      render : function (){
+        return (
+            <div className="col-md-12">
+              <Link className="btn btn-primary" to="checkAccounts">Check accounts</Link>
+              <Link className="btn btn-primary col-md-offset-1" to="transferFunds">Transfer funds</Link>
+              <Link className="btn btn-primary  col-md-offset-1" to="accountHistory">Accounts History</Link>
+            </div>
+        );
+      }
+    });
+
+    var Login = React.createClass({
+      render : function (){
+        return (
+          <div className="formbox">
+            <h2>Login</h2>
+            <form id="form_id" action="/login" method="post">
+              <div className="form-group">
+                  <label for=""> Pin</label>
+                  <input type="text" name="pin" className="form-control" />
+              </div>
+              <div className="form-group">
+                <label for=""> Password</label>
+                <input type="password" name="password" className="form-control" />
+              </div>
+              <div className="form-group">
+                <input type="submit" className="btn btn-primary" value="Sign in" />
+              </div>
+            </form>
+          </div>
+        );
+      }
+    });
+
+
+      var NewAccount = React.createClass({
+        render : function (){
+          return (
+            <div className="formbox">
+              <h2>New Account</h2>
+              <form id="form_id" action="/login" method="post">
+                <div className="form-group">
+                    <label for=""> First name</label>
+                    <input type="text" name="firstName" className="form-control" />
+                </div>
+                <div className="form-group">
+                  <label for=""> Last name</label>
+                  <input type="text" name="lastName" className="form-control" />
+                </div>
+                <div className="form-group">
+                  <label for=""> Date of birth</label>
+                  <input type="text" name="dateOfBirth" className="form-control" />
+                </div>
+                <div className="form-group">
+                  <label for=""> Phone Number</label>
+                  <input type="text" name="phoneNumber" className="form-control" />
+                </div>
+                <div className="form-group">
+                  <label for=""> Social security no.</label>
+                  <input type="text" name="snnitNumber" className="form-control" />
+                </div>
+                <div className="form-group">
+                  <label for=""> Occupation</label>
+                  <input type="text" name="occupation" className="form-control" />
+                </div>
+                <div className="form-group">
+                  <input type="submit" className="btn btn-primary" value="Sign in" />
+                </div>
+              </form>
+            </div>
+          );
+        }
+      });
+
+
+    var Tab = React.createClass({
+      render: function (){
+        return(
+          <div></div>
+        );
+      }
+    });
+
+    var App = React.createClass({
+      render: function (){
+        return (<div>
+
+          <AppMenu />
+
+          <RouteHandler/>
+         </div>);
+      }
+    });
+
+
+  var Master = React.createClass({
+    render: function (){
+      return(<div>
+        <h2> BDC APP</h2>
+        <ol>
+           <li><Link to="home">Home</Link></li>
+           <li><Link to="signin">Sign in</Link></li>
+           <li><Link to="signup">Sign up</Link></li>
+         </ol>
+        <RouteHandler />
+      </div>)
+    }
+  });
+
+  var CheckAccounts = React.createClass({
+    render: function (){
+      return(<h2> Checking accounts </h2>);
+    }
+  });
+
+  var AccountsHistory = React.createClass({
+    render: function (){
+      return(<h2> Account History </h2>);
+    }
+  });
+  var TransferFunds = React.createClass({
+    render: function (){
+      return(<h2> Transfer Funds</h2>);
+    }
+  });
+  var routes = (
+      <Route handler={Master}>
+        <Route name="home" handler={App}>
+          <Route name="checkAccounts" handler={CheckAccounts} />
+          <Route name="transferFunds" handler={TransferFunds} />
+          <Route name="accountHistory" handler={AccountsHistory} />
+        </Route>
+        <Route name="signin" handler={Login} />
+        <Route name="signup" handler={NewAccount} />
+      </Route>
+    );
+
+
+  ReactRouter.run (routes, function(Handler){
+    React.render(<Handler />, document.getElementById('main'));
+  });
+  </script>
+</body>
+</html>
